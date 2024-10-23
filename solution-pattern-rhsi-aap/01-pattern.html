@@ -100,19 +100,22 @@
     <a class="nav-link" href="03-demo.html#_walkthrough">3.1. Walkthrough</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="03-demo.html#_installing_red_hat_ansible_automation_platform">3.2. Installing AAP</a>
+    <a class="nav-link" href="03-demo.html#_downloading_resources_needed">3.2. Downloading resources needed</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="03-demo.html#_configuring_your_ansible_automation_platform_instance">3.3. Configuring AAP</a>
+    <a class="nav-link" href="03-demo.html#_installing_red_hat_ansible_automation_platform">3.3. Installing AAP</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="03-demo.html#_installing_red_hat_service_interconnect_on_red_hat_openshift">3.4. Installing RHSI on OCP</a>
+    <a class="nav-link" href="03-demo.html#_configuring_your_ansible_automation_platform_instance">3.4. Configuring AAP</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="03-demo.html#_connecting_the_third_party_networks">3.5. Connecting Third Party Networks</a>
+    <a class="nav-link" href="03-demo.html#_installing_red_hat_service_interconnect_on_red_hat_openshift">3.5. Installing RHSI on OCP</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="03-demo.html#_validating_the_scenario">3.6. Validating the scenario</a>
+    <a class="nav-link" href="03-demo.html#_connecting_the_third_party_networks">3.6. Connecting Third Party Networks</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-demo.html#_validating_the_scenario">3.7. Validating the scenario</a>
   </li>
 </ul>
   </li>
@@ -151,6 +154,7 @@
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
 </nav>
   <div class="edit-this-page"><a href="https://github.com/fgiorgetti/solution-pattern-rhsi-aap/edit/main/documentation/modules/ROOT/pages/01-pattern.adoc">Edit this Page</a></div>
@@ -161,7 +165,7 @@
 <h2 id="_the_story_behind_this_solution_pattern"><a class="anchor" href="#_the_story_behind_this_solution_pattern"></a>The story behind this solution pattern</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>{aap} (AAP) is widely used to manage a variety of environments.
+<p>Red Hat Ansible Automation Platform (AAP) is widely used to manage a variety of environments.
 In many occasions, a central AAP instance can be used to provide automation to multiple,
 and distinct, customers or partners, referred to in this solution pattern as a third-party network.</p>
 </div>
@@ -186,11 +190,11 @@ and they do not want to allocate extra resources to change their network infrast
 <h2 id="_the_solution"><a class="anchor" href="#_the_solution"></a>The Solution</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>With <strong>{rhsi}</strong> version 2, they can achieve that with minimal efforts, due to its
+<p>With <strong>Red Hat Service Interconnect</strong> version 2, they can achieve that with minimal efforts, due to its
 declarative nature.</p>
 </div>
 <div class="paragraph">
-<p>The partner that uses <strong>{aap}</strong> (AAP) to maintain the third-party infrastructures,
+<p>The partner that uses <strong>Red Hat Ansible Automation Platform</strong> (AAP) to maintain the third-party infrastructures,
 has its AAP instance running on an OpenShift cluster in the public cloud.</p>
 </div>
 <div class="paragraph">
@@ -201,7 +205,7 @@ being accessible only to the <strong><code>aap</code></strong> namespace, where 
 </div>
 <div class="paragraph">
 <p>With that, AAP can manage the third-party servers while keeping their hosts and network protected as all the
-traffic coming from AAP into their network will flow through {rhsi}, using secured mutual
+traffic coming from AAP into their network will flow through Red Hat Service Interconnect, using secured mutual
 TLS authentication and encryption.</p>
 </div>
 </div>
