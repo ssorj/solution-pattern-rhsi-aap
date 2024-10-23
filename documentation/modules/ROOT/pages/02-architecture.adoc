@@ -1,4 +1,6 @@
-= Solution Pattern: Name Template
+include::_attributes.adoc[]
+
+= Solution Pattern: {title}
 :sectnums:
 :sectlinks:
 :doctype: book
@@ -7,26 +9,44 @@
 
 Introduction for the architecture of this solution pattern.
 
-== Common Challenges 
-
 [#tech_stack]
 == Technology Stack
 
-// Change links and text here as you see fit.
 * Red Hat supported products
-** https://www.redhat.com/en/technologies/cloud-computing/openshift[Red Hat OpenShift]
-** Red Hat Application Foundation
-*** https://access.redhat.com/products/quarkus[Quarkus]
-*** https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-streams-for-apache-kafka[Kafka Streams]
+** https://www.redhat.com/en/technologies/cloud-computing/service-interconnect[{rhsi}]
+** https://www.redhat.com/en/technologies/management/ansible[{aap}]
+** https://www.redhat.com/en/technologies/cloud-computing/openshift[{ocp}]
+** https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux[{rhel}]
 * Other open source products:
-** https://www.postgresql.org/[PostgreSQL database]
-** https://helm.sh/[Helm]
+** https://podman.io/[Podman]
 
 
 [#in_depth]
 == An in-depth look at the solution's architecture
 
-Technical description including all or some of the following: architecture ir ed diagrams. In-depth details of the decisions made and solutions used. Description of each service and what it is used for. Description of any integration.
+The trusted partner has a *{ocp}* cluster running on the public cloud. In this {ocp} cluster, they
+have a **{aap}** (AAP) instance used to maintain third-party infrastructures.
+
+This AAP instance runs inside the `*aap*` namespace. For their AAP instance to be able to communicate with
+third-party servers, that are not accessible from the public cloud, they will use *{rhsi}* (RHSI) version 2.
+
+A separate namespace will be created for each isolated third-party network.
+
+Network policies will be applied to the third-party namespaces, to ensure that incoming internal traffic will only
+be allowed from the `*aap*` namespace. This will ensure that unauthorized access from a separate third-party namespace,
+as well as from any other namespace within this OpenShift cluster, will be denied.
+
+Each third-party namespace will have an instance of {rhsi} (RHSI) and this instance will be responsible for receiving an incoming
+RHSI link, coming from the third-party network. Once the {rhsi} link is established, using mutual TLS to ensure privacy
+and security, a selected set of servers, running in the third-party network, will be exposed by an RHSI instance running
+within the third-party network, into the third-party specific namespace on the {ocp} cluster.
+
+The respective servers are then exposed as Kubernetes services within the third-party namespace, where the AAP instance
+will be able to communicate with them via SSH transparently through RHSI.
+
+Distinct inventories will be created inside AAP, for each third-party network, representing the servers to be managed.
+
+image::architecture_diagram.png[Architecture]
 
 === Using images 
 
@@ -101,4 +121,11 @@ oc login --token=<token> --server=<server>
 [#more_tech]
 == About the Technology Stack
 
-If you want to include more details about the tech stack you used, this is the place.
+{rhsi} provides access to selected workloads running in the third-party network.
+In this solution pattern, we illustrate two third-party networks being managed by AAP.
+One of them, represented as *_Third-party network A_* has an RHSI instance running on a *{rhel}* (RHEL) machine.
+
+The following one, represented as *_Third-party network B_* has an RHSI instance running using *Podman*.
+
+It is important to mention that {rhsi} (version 2+) runs on Kubernetes clusters,
+{rhel} and using Podman or Docker container engines.

@@ -1,7 +1,32 @@
 == The story behind this solution pattern
 
-A description of the story that was used to build the demo and architectures of this SP.
+{aap} (AAP) is widely used to manage a variety of environments.
+In many occasions, a central AAP instance can be used to provide automation to multiple,
+and distinct, customers or partners, referred to in this solution pattern as a third-party network.
+
+The organizations behind these third-party networks are independent and they need their internal
+network to remain secure and not exposed to external or public access, coming from the internet,
+but they need to allow a centralized AAP instance, owned by a trusted partner, to be able to maintain
+their server's infrastructure.
+
+image::story_diagram.png[Scenario]
+
+These organizations need an easy way to expose their target servers to be managed by the trusted partner,
+and they do not want to allocate extra resources to change their network infrastructure.
 
 == The Solution
 
-This is a summary of the solution
+With *{rhsi}* version 2, they can achieve that with minimal efforts, due to its
+declarative nature.
+
+The partner that uses *{aap}* (AAP) to maintain the third-party infrastructures,
+has its AAP instance running on an OpenShift cluster in the public cloud.
+
+The partner will also prepare a Red Hat Service Interconnect site bundle to be installed into the third-party
+infrastructure, exposing their target servers into a specific namespace within their OpenShift cluster.
+An individual namespace will be used for each third-party network so that they're isolated from other namespaces,
+being accessible only to the *`aap`* namespace, where the AAP instance is running.
+
+With that, AAP can manage the third-party servers while keeping their hosts and network protected as all the
+traffic coming from AAP into their network will flow through {rhsi}, using secured mutual
+TLS authentication and encryption.

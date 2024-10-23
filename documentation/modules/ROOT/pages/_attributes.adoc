@@ -1,2 +1,7 @@
 :experimental:
 :source-highlighter: highlightjs
+:rhsi: Red Hat Service Interconnect
+:aap: Red Hat Ansible Automation Platform
+:ocp: Red Hat OpenShift
+:rhel: Red Hat Enterprise Linux
+:title: Using Red Hat Service Interconnect to extend the reach of Ansible Automation Platform
