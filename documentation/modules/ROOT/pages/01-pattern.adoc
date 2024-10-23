@@ -1,3 +1,5 @@
+include::_attributes.adoc[]
+
 == The story behind this solution pattern
 
 {aap} (AAP) is widely used to manage a variety of environments.

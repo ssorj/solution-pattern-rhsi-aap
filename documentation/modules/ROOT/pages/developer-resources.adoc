@@ -1,4 +1,6 @@
-= Solution Patterns: Template Name
+include::_attributes.adoc[]
+
+= Solution Patterns: {title}
 :sectnums:
 :sectlinks:
 :doctype: book
@@ -6,5 +8,5 @@
 
 = Developer Resources
 
-* https://docs.redhat.com/en/documentation/red_hat_service_interconnect/1.5[Red Hat Service Interconnect Documentation]
-* https://developers.redhat.com/products/service-interconnect/getting-started[Getting Started with Red hat Service Interconnect]
+* https://docs.redhat.com/en/documentation/red_hat_service_interconnect/1.5[{rhsi} Documentation]
+* https://developers.redhat.com/products/service-interconnect/getting-started[Getting Started with {rhsi}]

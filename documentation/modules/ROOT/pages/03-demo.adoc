@@ -23,7 +23,7 @@ In order to reproduce the following solution, you will need the following resour
 
 === Downloading resources needed
 
-This walkthrough guide uses some files packaged in a tar ball, which must be downloaded and extracted locally.
+This walkthrough guide uses some files packaged in a tar ball, which must be downloaded and extracted locally. +
 To download and extract the files needed, open a terminal and execute the following commands:
 
 [.console-input]
