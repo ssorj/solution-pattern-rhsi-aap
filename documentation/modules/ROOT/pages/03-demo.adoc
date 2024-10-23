@@ -1,6 +1,6 @@
 include::_attributes.adoc[]
 
-= Solution Pattern: {title}
+= Solution Patterns: {title}
 :sectnums:
 :sectlinks:
 :doctype: book
