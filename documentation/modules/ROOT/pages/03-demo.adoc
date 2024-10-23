@@ -17,9 +17,21 @@ In order to reproduce the following solution, you will need the following resour
 * A few virtual machines to be used as third-party servers, with SSH server running  
 * A machine or a virtual machine with {rhel} to simulate third-party network A, with access to the respective servers  
 * A Linux machine or virtual machine with Podman version 4+ to simulate third-party network B, with access to the respective servers
-* The following commands are expected: `kubectl`, `jq`, `awk` and `podman`
+* The following commands are expected: `kubectl`, `jq`, `awk`, `wget` and `podman`
 
 == Walkthrough
+
+=== Downloading resources needed
+
+This walkthrough guide uses some files packaged in a tar ball, which must be downloaded and extracted locally.
+To download and extract the files needed, open a terminal and execute the following commands:
+
+[.console-input]
+[source,shell script]
+----
+wget https://raw.githubusercontent.com/fgiorgetti/solution-pattern-rhsi-aap/refs/heads/main/documentation/modules/ROOT/assets/resources.tar.gz
+tar zxvf resources.tar.gz
+----
 
 === Installing {aap}
 
