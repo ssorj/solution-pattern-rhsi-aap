@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Using Red Hat Service Interconnect to extend the reach of Ansible Automation Platform :: Solution Patterns for Cloud Native Architectures</title>
+    <link rel="canonical" href="https://redhat-solution-patterns.github.io/solution-patterns/solution-pattern-rhsi-aap/02-architecture.html">
+    <link rel="prev" href="index.html">
+    <link rel="next" href="03-demo.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" style="font-size: 20px; color: white"
+        href="https://redhat-solution-patterns.github.io/solution-patterns">
+        <img src="../_/img/logo.png" height="35px" alt="Solution Patterns">&nbsp; Solution Patterns for Cloud Native Architectures</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Architectures &amp; Patterns</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://www.redhat.com/architect/portfolio/" target="_blank">Portfolio Architecture&nbsp; </a>
+            <a class="navbar-item" href="https://redhat-solution-patterns.github.io/solution-patterns/patterns.html"  target="_blank">Solution Patterns </a>
+            <a class="navbar-item" href="https://validatedpatterns.io/" target="_blank">Validated Patterns&nbsp;</a>
+            <a class="navbar-item" href="https://catalog.redhat.com/solutions" target="_blank">Ecosystem Solutions&nbsp;</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" target="_blank" href="https://developers.redhat.com">Red Hat Developers</a>
+            <a class="navbar-item" target="_blank" href="https://developers.redhat.com/app-dev-platform">App Dev Platform</a>
+            <a class="navbar-item" target="_blank" href="https://www.redhat.com/en/products/application-foundations">Red Hat Application Services</a>
+          </div>
+        </div>
+
+          <a class="navbar-item" target="_blank" href="https://github.com/redhat-solution-patterns/redhat-solution-patterns.github.io/issues">Feedback</a>
+          <a class="navbar-item" target="_blank" href="https://redhat-solution-patterns.github.io/solution-patterns/contributors-guide.html">Contribute</a>
+
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="solution-pattern-rhsi-aap" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">Template Tutorial</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">1. Home page</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="index.html#use-cases">1.1 Use cases</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="index.html#_the_story_behind_this_solution_pattern">1.2 The story behind this solution pattern</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="index.html#_the_solution">1.3 The solution</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-architecture.html">2. Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#tech_stack">2.1. Technology stack</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#in_depth">2.2. An in-depth look at the solution&#8217;s architecture</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#more_tech">2.3. More about the technology stack</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-demo.html">3. See the Solution in Action</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-demo.html#_walkthrough">3.1. Walkthrough</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-demo.html#_installing_red_hat_ansible_automation_platform">3.2. Installing AAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-demo.html#_configuring_your_ansible_automation_platform_instance">3.3. Configuring AAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-demo.html#_installing_red_hat_service_interconnect_on_red_hat_openshift">3.4. Installing RHSI on OCP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-demo.html#_connecting_the_third_party_networks">3.5. Connecting Third Party Networks</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-demo.html#_validating_the_scenario">3.6. Validating the scenario</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="developer-resources.html">4. Developer Resources</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-text"><a href="https://redhat-solution-patterns.github.io/solution-patterns/patterns.html" target="_blank" rel="noopener">Explore Red Hat Solution Patterns</a></span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Template Tutorial</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Template Tutorial</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Template Tutorial</a></li>
+    <li><a href="02-architecture.html">2. Architecture</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/fgiorgetti/solution-pattern-rhsi-aap/edit/main/documentation/modules/ROOT/pages/02-architecture.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Using Red Hat Service Interconnect to extend the reach of Ansible Automation Platform</h1>
+<h1 id="_architecture" class="sect0"><a class="anchor" href="#_architecture"></a><a class="link" href="#_architecture">Architecture</a></h1>
+<div class="openblock partintro">
+<div class="content">
+Introduction for the architecture of this solution pattern.
+</div>
+</div>
+<div class="sect1">
+<h2 id="tech_stack"><a class="anchor" href="#tech_stack"></a><a class="link" href="#tech_stack">1. Technology Stack</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Red Hat supported products</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.redhat.com/en/technologies/cloud-computing/service-interconnect">Red Hat Service Interconnect</a></p>
+</li>
+<li>
+<p><a href="https://www.redhat.com/en/technologies/management/ansible">Red Hat Ansible Automation Platform</a></p>
+</li>
+<li>
+<p><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift">Red Hat OpenShift</a></p>
+</li>
+<li>
+<p><a href="https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux">Red Hat Enterprise Linux</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Other open source products:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://skupper.io/">Skupper</a></p>
+</li>
+<li>
+<p><a href="https://podman.io/">Podman</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="in_depth"><a class="anchor" href="#in_depth"></a><a class="link" href="#in_depth">2. An in-depth look at the solution&#8217;s architecture</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The trusted partner has a <strong>Red Hat OpenShift</strong> cluster running on the public cloud. In this Red Hat OpenShift cluster, they
+have a <strong>Red Hat Ansible Automation Platform</strong> (AAP) instance used to maintain third-party infrastructures.</p>
+</div>
+<div class="paragraph">
+<p>This AAP instance runs inside the <code><strong>aap</strong></code> namespace. For their AAP instance to be able to communicate with
+third-party servers, that are not accessible from the public cloud, they will use <strong>Red Hat Service Interconnect</strong> (RHSI) version 2.</p>
+</div>
+<div class="paragraph">
+<p>A separate namespace will be created for each isolated third-party network.</p>
+</div>
+<div class="paragraph">
+<p>Network policies will be applied to the third-party namespaces, to ensure that incoming internal traffic will only
+be allowed from the <code><strong>aap</strong></code> namespace. This will ensure that unauthorized access from a separate third-party namespace,
+as well as from any other namespace within this OpenShift cluster, will be denied.</p>
+</div>
+<div class="paragraph">
+<p>Each third-party namespace will have an instance of Red Hat Service Interconnect (RHSI) and this instance will be responsible for receiving an incoming
+RHSI link, coming from the third-party network. Once the Red Hat Service Interconnect link is established, using mutual TLS to ensure privacy
+and security, a selected set of servers, running in the third-party network, will be exposed by an RHSI instance running
+within the third-party network, into the third-party specific namespace on the Red Hat OpenShift cluster.</p>
+</div>
+<div class="paragraph">
+<p>The respective servers are then exposed as Kubernetes services within the third-party namespace, where the AAP instance
+will be able to communicate with them via SSH transparently through RHSI.</p>
+</div>
+<div class="paragraph">
+<p>Distinct inventories will be created inside AAP, for each third-party network, representing the servers to be managed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/architecture_diagram.png" alt="Architecture">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="more_tech"><a class="anchor" href="#more_tech"></a><a class="link" href="#more_tech">3. About the Technology Stack</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Red Hat Service Interconnect provides access to selected workloads running in the third-party network.
+In this solution pattern, we illustrate two third-party networks being managed by AAP.
+One of them, represented as <strong><em>Third-party network A</em></strong> has an RHSI instance running on a <strong>Red Hat Enterprise Linux</strong> (RHEL) machine.</p>
+</div>
+<div class="paragraph">
+<p>The following one, represented as <strong><em>Third-party network B</em></strong> has an RHSI instance running using <strong>Podman</strong>.</p>
+</div>
+<div class="paragraph">
+<p>It is important to mention that Red Hat Service Interconnect (version 2+) runs on Kubernetes clusters,
+Red Hat Enterprise Linux and using Podman or Docker container engines.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="index.html" class="query-params-link">1. Home page</a></span>
+  <span class="next"><a href="03-demo.html" class="query-params-link">3. See the Solution in Action</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img
+          src="../_/img/app-services-logo.png" height="40px" alt="Cloud Native Architecture Solution Patterns"  href="https://redhat.com" ></a>
+</footer><script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
