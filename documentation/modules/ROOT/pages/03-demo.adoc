@@ -33,6 +33,9 @@ wget https://raw.githubusercontent.com/fgiorgetti/solution-pattern-rhsi-aap/refs
 tar zxvf resources.tar.gz
 ----
 
+The commands used in this waltkthrough must be executed inside the folder where this tar ball
+has been extracted into.
+
 === Installing {aap}
 
 We will just briefly explain how to install {aap} on an {ocp} cluster.
@@ -73,8 +76,11 @@ image::walkthrough_aap_create_form.png[Operator Install]
 
 In order to validate this solution pattern, we will need to configure the Ansible Automation Platform (AAP) instance first.
 
+[NOTE]
+====
 Since the goal is to demonstrate how {rhsi} (RHSI) helps you connect your AAP automation with managed hosts that are not reachable,
 the AAP configuration used in this solution pattern is minimal.
+====
 
 Here is what we will configure:
 
@@ -146,8 +152,11 @@ As you may have noticed, our inventories rely that the servers will be reachable
 * server-b2.net-b
 * server-b3.net-b
 
+[IMPORTANT]
+====
 At this point, these hosts cannot be resolved by AAP, but once we finish the setup of our solution, AAP should be
 able to resolve and connect with these hosts.
+====
 
 ==== Create the credentials
 
@@ -197,17 +206,17 @@ It will be used to trigger both job templates at once.
 * Go to `*Templates*` (under Automation Execution) on the left menu
 * Click the `*Create template*` button, then click `*Create workflow job template*`
 * Enter the following data:
- ** Name: third-party-networks
- ** Organization: Default
+ ** Name: `*third-party-networks*`
+ ** Organization: `*Default*`
  ** Click the `*Create workflow job template*` button
  ** Click the `*Add step*` button
- ** Node type: Job Template
- ** Job Template: third-party-network-a
+ ** Node type: `*Job Template*`
+ ** Job Template: `*third-party-network-a*`
  ** Click the `*Next*` button
  ** Click the `*Finish*` button
  ** Click the  `*Add step*` button
- ** Node type: Job Template
- ** Job Template: third-party-network-b
+ ** Node type: `*Job Template*`
+ ** Job Template: `*third-party-network-b*`
  ** Click the `*Next*` button
  ** Click the `*Finish*` button
  ** Click the `*Save*` button
@@ -224,20 +233,22 @@ Now we need to install and configure *{rhsi}* to link the third-party networks w
 
 [IMPORTANT]
 ====
-THE FOLLOWING INSTRUCTIONS USE THE UPSTREAM VERSION OF RHSI (SKUPPER V2) +
-ONCE RHSI V2 IS RELEASED, THIS WHOLE SECTION MUST BE UPDATED TO USE RHSI V2 INSTEAD.
+The following instructions use the upstream version of {rhsi} (Skupper V2), +
+as at the time this solution pattern has been written, RHSI Version 2 has not yet been released. +
+Once RHSI Version 2 is released, this whole section will be updated to use it instead.
 ====
 
 We need to install *{rhsi}* in two separate namespaces. +
 The reason for this is to ensure that each third-party network is connected to an isolated _Virtual Application Network_ (VAN).
 
-Along with that we will also create _Network Policies_ to ensure that each namespace is only accessible to AAP,
+Along with that we will also create _Network Policies_ to ensure that each namespace is only accessible by AAP,
 so that the third-party servers exposed into the {ocp} cluster can only be reached internally by AAP.
 
 ==== Installing the *{rhsi}* controller
 
 The RHSI controller is deployed to its own namespace and it has the ability to watch for RHSI resources across all namespaces
-in the {ocp} cluster. +
+in the {ocp} cluster.
+
 Let's install the RHSI controller:
 
 * Open a terminal
@@ -273,7 +284,7 @@ Once the RHSI controller is running, we need to apply the RHSI Custom Resources 
 
 * Sites
 * Listeners
-* AccessTokens
+* AccessGrants
 
 The first thing we need to do is create the namespaces for third-party networks A and B. +
 The namespaces will be named: `*net-a*` and `*net-b*` respectively.
@@ -283,6 +294,12 @@ used in the AAP inventories, example given: `*server-a1.net-a*`.
 
 Let's have a look at the custom resources we need to define these two RHSI sites. +
 The resources can be found at `*./cloud/net-a*` and `*./cloud/net-b*` folders.
+
+[NOTE]
+====
+The resources used from now on are available as part of the tar ball that must be
+downloaded and extracted locally. If you haven't yet done that, go to <<_downloading_resources_needed>>.
+====
 
 * `*Site*`
  ** A Site represents a separate RHSI instance
@@ -355,27 +372,29 @@ site.skupper.io/net-b   OK
 
 ==== Preparing site bundles for third-party networks
 
-A site bundle is a compressed file that contains a whole RHSI site definition to run outside of Kubernetes or OpenShift. +
-They can be installed to run as a container, using Podman or Docker and also as an regular process on a {rhel} server,
+A site bundle is a compressed file that contains the whole RHSI site definition to run outside of Kubernetes or OpenShift. +
+They can be installed to run as a container, using Podman or Docker and also as a regular process on a {rhel} server,
 which will require a local installation of the `*skupper-router*` _RPM_ package.
 
 The site bundle is an easy approach to install a prepared site definition on a remote location, but you could also create
 a non-Kubernetes site using the Skupper V2 CLI or a bootstrap container.
 
 Here are the Custom Resources (CRs) needed to define the site bundles.
+
 * `*Site*`
-* `*Connector*`
+* `*Connectors*`
 * `*AccessToken*` (will be generated from `*AccessGrants*` created earlier)
 
 In order to prepare a site bundle to be installed at the Third Party Networks, we will use the CRs located under
-`*./internal/net-a*` and `*./internal/net-b*`.
+`*./internal/net-a*` and `*./internal/net-b*` folders.
 
 Along with these CRs, we also need to generate `*AccessTokens*`, so that the bundles have the ability to establish
 an RHSI link against the RHSI site running on the {ocp} cluster on namespaces `*net-a*` and `*net-b*` respectively.
 
 To generate the `*AccessTokens*` we will need to extract some information from the `*AccessGrant*` created on both
 `*net-a*` and `*net-b*` namespaces. +
-To do it, execute the `*./scripts/generate-access-token.sh*` script, using:
+
+To do it, execute the following commands:
 
 [.console-input]
 [source,shell script]
@@ -412,21 +431,21 @@ the target server where the RHSI site will be installed, then execute it, for ex
 [source,shell script]
 ----
 scp skupper-install-net-a.sh my-user@my-server-third-party-net-a:
-./skupper-install-net-a.sh -n net-a
+ssh my-user@my-server-third-party-net-a ./skupper-install-net-a.sh -n net-a
 ----
 
 [.console-input]
 [source,shell script]
 ----
 scp skupper-install-net-b.sh my-user@my-server-third-party-net-b:
-./skupper-install-net-b.sh -n net-b
+ssh my-user@my-server-third-party-net-b ./skupper-install-net-b.sh -n net-b
 ----
 
 [WARNING]
 ====
-The commands above have been executed against an internal hostname that
-represents the server where the RHSI site bundle will be installed and these
-servers can reach the target hosts that will be managed by AAP. +
+The commands above have been executed against internal hosts that
+represent the servers where the RHSI site bundle will be installed
+and these servers can reach the target hosts that will be managed by AAP. +
 Update the commands to use your own hostnames or IP addresses.
 ====
 
@@ -439,7 +458,8 @@ install the `*skupper-router*` _RPM_ package and then you should run the bundle 
 [source,shell script]
 ----
 scp skupper-install-net-a.sh my-user@my-server-third-party-net-a:
-./skupper-install-net-a.sh -n net-a -p systemd
+ssh my-user@my-server-third-party-net-a dnf -y install skupper-router
+ssh my-user@my-server-third-party-net-a ./skupper-install-net-a.sh -n net-a -p systemd
 ----
 ====
 
@@ -448,7 +468,7 @@ by AAP inside the {ocp} cluster.
 
 === Validating the scenario
 
-Now the whole scenario has been deployed and the *_Workflow job template_* that was created on AAP should be able to run and
+Now the whole scenario has been deployed, the *_Workflow job template_* that was created on AAP should be able to run and
 reach all servers.
 
 Back to the AAP console, go to:
@@ -460,3 +480,10 @@ Back to the AAP console, go to:
 * You should see a successful result
 
 image::walkthrough_aap_workflow_success.png[Workflow job template successful]
+
+== Conclusion
+
+{rhsi} dramatically expands the reach of your centralized {aap} by securely managing previously inaccessible hosts.
+
+Its user-friendly and declarative interface makes it easy to extend your automation to a wider range of devices,
+enabling you to manage hosts across hybrid and multi-cloud environments
