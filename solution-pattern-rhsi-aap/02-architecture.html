@@ -258,6 +258,29 @@ will be able to communicate with them via SSH transparently through RHSI.</p>
 <img src="_images/architecture_diagram.png" alt="Architecture">
 </div>
 </div>
+<div class="sect2">
+<h3 id="_alternative_architecture"><a class="anchor" href="#_alternative_architecture"></a><a class="link" href="#_alternative_architecture">2.1. Alternative architecture</a></h3>
+<div class="paragraph">
+<p>Consider an alternative and illustrative architecture, for scenarios where the Red Hat Ansible Automation Platform instance, used by the Trusted Partner,
+is not hosted in a Public Cloud environment.</p>
+</div>
+<div class="paragraph">
+<p>By introducing an intermediary site within a Public Cloud, we can seamlessly integrate private networks.
+This approach involves deploying another Red Hat OpenShift cluster in the Public Cloud, with dedicated namespaces for each
+third-party network. These namespaces have their own Red Hat Service Interconnect instance to provide secure and isolated endpoints for incoming
+links from both the Trusted Partner network and the third-party networks.</p>
+</div>
+<div class="paragraph">
+<p>While this alternative approach is not the focus of this solution pattern, it highlights the flexibility and
+adaptability of our solution to diverse network environments. By leveraging cloud-based infrastructure, we can empower
+organizations to achieve optimal performance, security, and scalability.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/architecture_alternative_diagram.png" alt="Alternative architecture">
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
