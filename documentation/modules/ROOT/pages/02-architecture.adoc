@@ -49,6 +49,23 @@ Distinct inventories will be created inside AAP, for each third-party network, r
 
 image::architecture_diagram.png[Architecture]
 
+
+=== Alternative architecture
+
+Consider an alternative and illustrative architecture, for scenarios where the {aap} instance, used by the Trusted Partner,
+is not hosted in a Public Cloud environment.
+
+By introducing an intermediary site within a Public Cloud, we can seamlessly integrate private networks.
+This approach involves deploying another {ocp} cluster in the Public Cloud, with dedicated namespaces for each
+third-party network. These namespaces have their own {rhsi} instance to provide secure and isolated endpoints for incoming
+links from both the Trusted Partner network and the third-party networks.
+
+While this alternative approach is not the focus of this solution pattern, it highlights the flexibility and
+adaptability of our solution to diverse network environments. By leveraging cloud-based infrastructure, we can empower
+organizations to achieve optimal performance, security, and scalability.
+
+image::architecture_alternative_diagram.png[Alternative architecture]
+
 [#more_tech]
 == About the Technology Stack
 
