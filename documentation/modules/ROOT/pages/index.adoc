@@ -7,15 +7,14 @@ include::_attributes.adoc[]
 :doctype: book
 
 Managing hosts within a third-party network using *{aap}* (AAP) can present unique challenges
-due to security restrictions and several other obstacles, like strict policies that do not allow incoming connections to be
+due to security restrictions and other obstacles, such as policies that do not allow incoming connections to be
 established.
 
-Additionally, setting up a VPN connection can introduce further complexities for organizations that are already dealing with
-complex IT environments. Many companies prefer to avoid the added administrative overhead associated with VPN.
+Setting up a VPN introduces further complexities for organizations that are already dealing with
+complex IT environments. Many companies prefer to avoid the added administrative overhead associated with VPNs.
 
 This solution pattern introduces a secure, flexible and easy alternative to expose desired hosts running in protected
 environments, to be managed remotely by AAP using *{rhsi}*.
-
 
 *Contributors:* _Fernando Giorgetti (Red Hat)_
 
@@ -24,15 +23,17 @@ environments, to be managed remotely by AAP using *{rhsi}*.
 ++++
 [NOTE]
 ====
-Solutions Patterns help you understand the art of the possible with Red Hat's portfolio, and not intended to be used as is for production environments. You are welcome use any part of this solution pattern for your own workloads.
+Solutions Patterns help you understand the art of the possible with Red Hat's portfolio. They are not intended to be
+used as-is for production environments. You are welcome to use any part of this solution pattern for your own workloads.
 ====
+
 [#use-cases]
 == Use cases
 
-Common use cases that can be address with this architecture are:
+Common use cases that can be addressed with this architecture are:
 
-- Extend your Ansible automation to reach hosts on private networks
-- Exposing TCP workloads accessible by a Linux or a Container endpoint, into a Kubernetes or OpenShift cluster
-- Access workloads running on a Kubernetes or OpenShift cluster as a local endpoint in your internal network
+- Extending your Ansible automation to reach hosts on private networks
+- Exposing TCP workloads accessible by a Linux or a container endpoint into a Kubernetes or OpenShift cluster
+- Accessing workloads running on a Kubernetes or OpenShift cluster as a local endpoint in your internal network
 
 include::01-pattern.adoc[]
