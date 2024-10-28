@@ -3,12 +3,12 @@ include::_attributes.adoc[]
 == The story behind this solution pattern
 
 {aap} (AAP) is widely used to manage a variety of environments.
-In many occasions, a central AAP instance can be used to provide automation to multiple,
-and distinct, customers or partners, referred to in this solution pattern as a third-party network.
+In many cases, a central AAP instance can be used to provide automation to multiple,
+distinct customers, referred to in this solution pattern as third-party networks.
 
-The organizations behind these third-party networks are independent and they need their internal
-network to remain secure and not exposed to external or public access, coming from the internet,
-but they need to allow a centralized AAP instance, owned by a trusted partner, to be able to maintain
+The organizations behind these third-party networks are independent, and they need their internal
+networks to remain secure and isolated from the public internet.
+However, they also need to allow a centralized AAP instance, owned by a trusted partner, to be able to maintain
 their server's infrastructure.
 
 image::story_diagram.png[Scenario]
@@ -18,17 +18,17 @@ and they do not want to allocate extra resources to change their network infrast
 
 == The Solution
 
-With *{rhsi}* version 2, they can achieve that with minimal efforts, due to its
+With *{rhsi}* version 2, they can achieve this with minimal effort, due to its
 declarative nature.
 
-The partner that uses *{aap}* (AAP) to maintain the third-party infrastructures,
+The trusted partner that uses *{aap}* (AAP) to manage the resources of the third-party networks
 has its AAP instance running on an OpenShift cluster in the public cloud.
 
-The partner will also prepare a Red Hat Service Interconnect site bundle to be installed into the third-party
-infrastructure, exposing their target servers into a specific namespace within their OpenShift cluster.
-An individual namespace will be used for each third-party network so that they're isolated from other namespaces,
-being accessible only to the *`aap`* namespace, where the AAP instance is running.
+The trusted partner also prepares a {rhsi} site bundle to be installed on the third-party
+infrastructure, exposing their target servers to a specific namespace within their OpenShift cluster.
+A dedicated namespace is used for each third-party network, so that they're isolated from other namespaces,
+being accessible only to the *`aap`* namespace where the AAP instance is running.
 
-With that, AAP can manage the third-party servers while keeping their hosts and network protected as all the
+With that, AAP can manage the third-party servers while keeping their hosts and network protected, since all the
 traffic coming from AAP into their network will flow through {rhsi}, using secured mutual
 TLS authentication and encryption.
