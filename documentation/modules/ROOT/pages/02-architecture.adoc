@@ -26,26 +26,26 @@ Introduction for the architecture of this solution pattern.
 == An in-depth look at the solution's architecture
 
 The trusted partner has a *{ocp}* cluster running on the public cloud. In this {ocp} cluster, they
-have a **{aap}** (AAP) instance used to maintain third-party infrastructures.
+have a **{aap}** (AAP) instance used to manage third-party resources.
 
-This AAP instance runs inside the `*aap*` namespace. For their AAP instance to be able to communicate with
-third-party servers, that are not accessible from the public cloud, they will use *{rhsi}* (RHSI) version 2.
+This AAP instance runs inside the `*aap*` namespace. In order for their AAP instance to communicate with
+third-party servers, whicy are not accessible from the public cloud, they use *{rhsi}* (RHSI) version 2.
 
-A separate namespace will be created for each isolated third-party network.
+A dedicated namespace is created for each isolated third-party network.
 
-Network policies will be applied to the third-party namespaces, to ensure that incoming internal traffic will only
-be allowed from the `*aap*` namespace. This will ensure that unauthorized access from a separate third-party namespace,
-as well as from any other namespace within this OpenShift cluster, will be denied.
+Network policies are applied to the third-party namespaces to ensure that incoming internal traffic is allowed only 
+from the `*aap*` namespace. This ensures that unauthorized access from a separate third-party namespace,
+as well as from any other namespace within this OpenShift cluster, is denied.
 
-Each third-party namespace will have an instance of {rhsi} (RHSI) and this instance will be responsible for receiving an incoming
-RHSI link, coming from the third-party network. Once the {rhsi} link is established, using mutual TLS to ensure privacy
-and security, a selected set of servers, running in the third-party network, will be exposed by an RHSI instance running
+Each third-party namespace has an instance of {rhsi} (RHSI), and this instance is responsible for receiving an incoming
+RHSI link, coming from the third-party network. Once the mutual TLS link is established, a selected set of servers
+from the third-party network ares exposed by an RHSI instance running
 within the third-party network, into the third-party specific namespace on the {ocp} cluster.
 
 The respective servers are then exposed as Kubernetes services within the third-party namespace, where the AAP instance
-will be able to communicate with them via SSH transparently through RHSI.
+is able to communicate with them via SSH transparently through RHSI.
 
-Distinct inventories will be created inside AAP, for each third-party network, representing the servers to be managed.
+Distinct inventories ared created inside AAP, one for each third-party network, representing the servers to be managed.
 
 image::architecture_diagram.png[Architecture]
 
@@ -55,10 +55,10 @@ image::architecture_diagram.png[Architecture]
 Consider an alternative and illustrative architecture, for scenarios where the {aap} instance, used by the Trusted Partner,
 is not hosted in a Public Cloud environment.
 
-By introducing an intermediary site within a Public Cloud, we can seamlessly integrate private networks.
-This approach involves deploying another {ocp} cluster in the Public Cloud, with dedicated namespaces for each
+By introducing an intermediary site within a public cloud, we can seamlessly integrate private networks.
+This approach involves deploying another {ocp} cluster in the public cloud, with dedicated namespaces for each
 third-party network. These namespaces have their own {rhsi} instance to provide secure and isolated endpoints for incoming
-links from both the Trusted Partner network and the third-party networks.
+links from both the trusted-partner network and the third-party networks.
 
 While this alternative approach is not the focus of this solution pattern, it highlights the flexibility and
 adaptability of our solution to diverse network environments. By leveraging cloud-based infrastructure, we can empower
@@ -76,4 +76,4 @@ One of them, represented as *_Third-party network A_* has an RHSI instance runni
 The following one, represented as *_Third-party network B_* has an RHSI instance running using *Podman*.
 
 It is important to mention that {rhsi} (version 2+) runs on Kubernetes clusters,
-{rhel} and using Podman or Docker container engines.
+{rhel}, and using Podman or Docker container engines.
